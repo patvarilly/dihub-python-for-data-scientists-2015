@@ -8,7 +8,7 @@ Brussels on Thu 17 Sep 2015.
 
 Most of the material here is either directly from or closely adapted
 from other sources. In particular, the overview closely follows the
-chapter 2 of
+chapter 1 of
 ["Python: Essential Reference" (4th edition), by David Beazley](http://www.amazon.com/Python-Essential-Reference-David-Beazley/dp/0672329786/ref=sr_1_1?s=books&ie=UTF8&qid=1442566599&sr=1-1&keywords=python+essential+reference)
 and the Scikit.learn and Pandas notebooks owe a lot to
 [Jake Vanderplas](https://github.com/jakevdp)'
