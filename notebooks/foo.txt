@@ -1,0 +1,3 @@
+Line 1 of foo.txt
+Line 2 of foo.txt
+Line 3 of foo.txt

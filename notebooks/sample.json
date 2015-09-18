@@ -1,0 +1,45 @@
+[
+  {
+    "Clusters": {
+      "desired_config": [
+        {
+          "type": "kerberos-env",
+          "tag": "version1439379923275",
+          "properties": {
+            "kdc_type": "mit-kdc",
+            "kdc_host": "kdc.cluster.local",
+            "realm": "CLUSTER.LOCAL",
+            "ldap_url": "",
+            "container_dn": "",
+            "manage_identities": "true",
+            "install_packages": "false",
+            "executable_search_paths": "/usr/bin, /usr/kerberos/bin, /usr/sbin, /usr/lib/mit/bin, /usr/lib/mit/sbin",
+            "encryption_types": "aes des3-cbc-sha1 rc4 des-cbc-md5",
+            "password_length": "20",
+            "password_min_lowercase_letters": "1",
+            "password_min_uppercase_letters": "1",
+            "password_min_digits": "1",
+            "password_min_punctuation": "1",
+            "password_min_whitespace": "0",
+            "service_check_principal_name": "${cluster_name}-${short_date}",
+            "create_attributes_template": "\n{\n  \"objectClass\": [\"top\", \"person\", \"organizationalPerson\", \"user\"],\n  \"cn\": \"$principal_name\",\n  #if( $is_service )\n  \"servicePrincipalName\": \"$principal_name\",\n  #end\n  \"userPrincipalName\": \"$normalized_principal\",\n  \"unicodePwd\": \"$password\",\n  \"accountExpires\": \"0\",\n  \"userAccountControl\": \"66048\"\n}\n    ",
+            "case_insensitive_username_rules": "false",
+            "admin_server_host": "kdc.cluster.local"
+          },
+          "service_config_version_note": "This is the initial configuration created by Enable Kerberos wizard."
+        },
+        {
+          "type": "krb5-conf",
+          "tag": "version1439379923275",
+          "properties": {
+            "content": "\n[libdefaults]\n  renew_lifetime = 7d\n  forwardable = true\n  default_realm = {{realm}}\n  ticket_lifetime = 24h\n  dns_lookup_realm = false\n  dns_lookup_kdc = false\n  #default_tgs_enctypes = {{encryption_types}}\n  #default_tkt_enctypes = {{encryption_types}}\n\n{% if domains %}\n[domain_realm]\n{% for domain in domains.split(',') %}\n  {{domain}} = {{realm}}\n{% endfor %}\n{% endif %}\n\n[logging]\n  default = FILE:/var/log/krb5kdc.log\n  admin_server = FILE:/var/log/kadmind.log\n  kdc = FILE:/var/log/krb5kdc.log\n\n[realms]\n  {{realm}} = {\n    admin_server = {{admin_server_host|default(kdc_host, True)}}\n    kdc = {{kdc_host}}\n  }\n\n{# Append additional realm declarations below #}\n    ",
+            "domains": "cluster.local,.cluster.local",
+            "manage_krb5_conf": "false",
+            "conf_dir": "/etc"
+          },
+          "service_config_version_note": "This is the initial configuration created by Enable Kerberos wizard."
+        }
+      ]
+    }
+  }
+]
